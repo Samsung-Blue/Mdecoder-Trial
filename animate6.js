@@ -90,7 +90,7 @@ function addRandomShape(i)
 function addShape()
 {
 	shape = Math.floor(3*Math.random());
-	shapes[i].posY = canvas.height-150;
+	shapes[i].posY = canvas.height+100;
 	shapes[i].rc = Math.floor(256*Math.random());
 	shapes[i].gc = Math.floor(256*Math.random());
 	shapes[i].bc = Math.floor(256*Math.random());
@@ -110,7 +110,6 @@ function addShape()
 		case 2:
 			shapes[i].shapeNo = 3;
 			shapes[i].posX = Math.floor(canvas.width*Math.random());
-			shapes[i].posY = canvas.height-100;
 			shapes[i].p1X = shapes[i].posX + Math.floor(200*Math.random())-100;
 			shapes[i].p1Y = shapes[i].posY + Math.floor(200*Math.random())-100;
 			shapes[i].p2X = shapes[i].posX + Math.floor(200*Math.random())-100;
