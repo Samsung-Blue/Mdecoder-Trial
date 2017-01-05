@@ -27,8 +27,7 @@ function addDigits()
 		digits[i].gc = gc;
 		digits[i].bc = bc;
 		ctx.fillStyle = "rgb("+digits[i].rc+","+digits[i].gc+','+digits[i].bc+")";
-		ctx.fillText(digits[i].digit,digits[i].posX,digits[i].posY)
-		//digits[i].tiltAngle = 
+		ctx.fillText(digits[i].digit,digits[i].posX,digits[i].posY);
 	}
 }
 function render()

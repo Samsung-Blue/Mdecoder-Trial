@@ -3,11 +3,14 @@ var ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth - 25;
 canvas.height = window.innerHeight - 25;
 var shapes = [];
+var digits = [];
 var i=0;
-for(i=0;i<15;i++)
+for(i=0;i<20;i++)
 {
+	digits[i]={};
 	shapes[i]={};
-	addRandomShape(i);
+	addShape(i,0);
+	addNumbers(i,0);
 }
 render();
 
@@ -19,7 +22,7 @@ function render()
 function animate()
 {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
-	for(i=0;i<15;i++)
+	for(i=0;i<20;i++)
 	{
 		if(shapes[i].shapeNo==0)
 		{
@@ -49,14 +52,29 @@ function animate()
 			ctx.fillStyle="rgb("+shapes[i].rc+','+shapes[i].bc+','+shapes[i].gc+')';
 			ctx.fill();
 		}
-		if(shapes[i].posY<=-10)
+		if(shapes[i].posY<=-100)
 		{
-			addShape(i);
+			addShape(i,1);
+		}
+	}
+	for(i=0;i<20;i++)
+	{
+		digits[i].posY-=1;
+		ctx.font = digits[i].fontSize+"px Gloria Hallelujah";
+		ctx.fillStyle = "rgb("+digits[i].rc+","+digits[i].gc+','+digits[i].bc+")";
+		ctx.fillText(digits[i].digit,digits[i].posX,digits[i].posY);
+		if(digits[i].posY<=-100)
+		{
+			addNumbers(i,1);
 		}
 	}
 }
-function addRandomShape(i)
+function addShape(i,old)
 {
+	if(!old)
+		shapes[i].posY = Math.floor(canvas.height*Math.random());
+	else
+		shapes[i].posY = canvas.height+100;
 	shape = Math.floor(3*Math.random());
 	shapes[i].rc = Math.floor(256*Math.random());
 	shapes[i].gc = Math.floor(256*Math.random());
@@ -67,19 +85,16 @@ function addRandomShape(i)
 			shapes[i].shapeNo = 0;
 			shapes[i].radius = Math.floor(30*Math.random())+6;
 			shapes[i].posX = Math.floor(canvas.width*Math.random());
-			shapes[i].posY = Math.floor(canvas.height*Math.random());
 			break;
 		case 1:
 			shapes[i].shapeNo = 1;
 			shapes[i].width = Math.floor(60*Math.random())+20;
 			shapes[i].height = Math.floor(60*Math.random())+20;
 			shapes[i].posX = Math.floor(canvas.width*Math.random());
-			shapes[i].posY = Math.floor(canvas.height*Math.random());
 			break;
 		case 2:
 			shapes[i].shapeNo = 2;
 			shapes[i].posX = Math.floor(canvas.width*Math.random());
-			shapes[i].posY = Math.floor(canvas.height*Math.random());
 			shapes[i].p1X = shapes[i].posX + Math.floor(200*Math.random())-100;
 			shapes[i].p1Y = shapes[i].posY + Math.floor(200*Math.random())-100;
 			shapes[i].p2X = shapes[i].posX + Math.floor(200*Math.random())-100;
@@ -87,33 +102,16 @@ function addRandomShape(i)
 			break;
 	}
 }
-function addShape()
+function addNumbers(i,old)
 {
-	shape = Math.floor(3*Math.random());
-	shapes[i].posY = canvas.height+100;
-	shapes[i].rc = Math.floor(256*Math.random());
-	shapes[i].gc = Math.floor(256*Math.random());
-	shapes[i].bc = Math.floor(256*Math.random());
-	switch(shape)
-	{
-		case 0:
-			shapes[i].shapeNo = 0;
-			shapes[i].radius = Math.floor(30*Math.random())+6;
-			shapes[i].posX = Math.floor(canvas.width*Math.random());
-			break;
-		case 1:
-			shapes[i].shapeNo = 1;
-			shapes[i].width = Math.floor(60*Math.random())+20;
-			shapes[i].height = Math.floor(60*Math.random())+20;
-			shapes[i].posX = Math.floor(canvas.width*Math.random());
-			break;
-		case 2:
-			shapes[i].shapeNo = 3;
-			shapes[i].posX = Math.floor(canvas.width*Math.random());
-			shapes[i].p1X = shapes[i].posX + Math.floor(200*Math.random())-100;
-			shapes[i].p1Y = shapes[i].posY + Math.floor(200*Math.random())-100;
-			shapes[i].p2X = shapes[i].posX + Math.floor(200*Math.random())-100;
-			shapes[i].p2Y = shapes[i].posY + Math.floor(200*Math.random())-100;
-			break;
-	}
+	if(!old)
+		digits[i].posY = Math.floor(canvas.height*Math.random());
+	else
+		digits[i].posY = canvas.height+100;
+	digits[i].digit=Math.floor(Math.random()*10);
+	digits[i].posX = Math.floor(canvas.width*Math.random());
+	digits[i].fontSize = Math.floor(100*Math.random())+30;
+	digits[i].rc = Math.floor(256*Math.random());
+	digits[i].gc = Math.floor(256*Math.random());
+	digits[i].bc = Math.floor(256*Math.random());
 }
